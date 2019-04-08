@@ -1,5 +1,5 @@
 # CS130 Final Project
-Submitted by [Nathan John Kibanoff](github.com/NateKibanoff) and [Don Richson Que](github.com/Draqe)
+Submitted by [Nathan John Kibanoff](http://github.com/NateKibanoff) and [Don Richson Que](http://github.com/Draqe)
 
 ## Files included in the submission (to be updated)
 - README.md
