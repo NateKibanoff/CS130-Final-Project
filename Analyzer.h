@@ -10,7 +10,7 @@
 #define RBRACKET 10
 #define EQUALS 11
 #define LTHAN 12
-#define RTHAN 13
+#define GTHAN 13
 #define COLON 14
 #define COMMA 15
 #define SCOLON 16

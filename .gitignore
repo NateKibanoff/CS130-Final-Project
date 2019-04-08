@@ -1,0 +1,5 @@
+*.txt
+*.html
+*.csv
+*.exe
+lex.yy.c
