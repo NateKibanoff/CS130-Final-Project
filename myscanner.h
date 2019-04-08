@@ -20,4 +20,4 @@
 #define NUMBER 20
 #define IDENT 21
 #define TAGIDENT 22
-#define EOF 23
+#define ENDTAGHEAD 23
