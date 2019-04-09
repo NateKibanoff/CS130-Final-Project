@@ -27,6 +27,12 @@ int main(){
 			if(token == ERROR){
 				printf("***lexical error: illegal character (%s)\n",yytext);
 			}
+			else if(token == NUMERROR){
+				printf("***lexical error: badly formed number\n");
+				printf("NUMBER");
+				for(int i=5;i>0;i--) printf(" ");
+				printf("%s\n",yytext);
+			}
 			else{
 				printf(tokens[token]);
 				for(int i=11;i>strlen(tokens[token]);i--) printf(" ");
