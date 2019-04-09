@@ -15,7 +15,7 @@ Submitted by [Nathan John Kibanoff](http://github.com/NateKibanoff) and [Don Ric
 
 ## How to recompile and run programs from source codes (to be updated)
 *Lexical analyzer program*
-1. Run the command ```lex Analyzer.l``` to produce a C program named ```lex.yy.c```
+1. Run the command ```lex Analyzer.l``` to produce a C program named ```lex.yy.c``` using the command prompt
 2. Compile the final Analyzer program by running ```gcc Analyzer.c lex.yy.c -o Analyzer```. This should produce an executable named ```Analyzer.exe```
 3. To run the program, input the command ```Analyzer < input.html > output.txt```
 
