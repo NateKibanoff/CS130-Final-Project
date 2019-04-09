@@ -5,16 +5,17 @@
 %option nounput yylineno
 
 %%
+[ \t\r\n]										;
 "<!--".*"-->"									;
 "<!--"											return LCOMMENT;
 .*"-->"											return RCOMMENT;
-[0-9]+("."[0-9]+)?([eE][-]?[0-9]+)?				return NUMBER;
-[0-9]+[^"."]									return ERROR;
-[0-9]+("."[^0-9])								return ERROR;
-[0-9]+("."[0-9]+)?[^eE]							return ERROR;	
-[0-9]+("."[0-9]+)?[eE][^-]						return ERROR;
-[0-9]+("."[0-9]+)?[eE][-]?[^0-9]				return ERROR;
-[0-9]+("."[0-9]+)?[eE][-]?[0-9]+[^0-9]			return ERROR;
+[-+]?[0-9]+("."[0-9]+)?([eE][-+]?[0-9]+)?		return NUMBER;
+[0-9]+[^"."\t\r\n]								return ERROR;
+[0-9]+("."[^0-9\t\r\n])							return ERROR;
+[0-9]+("."[0-9]+)?[^eE\t\r\n]					return ERROR;	
+[0-9]+("."[0-9]+)?[eE][^-0-9]					return ERROR;
+[0-9]+("."[0-9]+)?[eE][-]?[^0-9\t\r\n]			return ERROR;
+[0-9]+("."[0-9]+)?[eE][-]?[0-9]+[^0-9\t\r\n]	return ERROR;
 "+"												return PLUS;
 "-"												return MINUS;
 "**"											return EXP;
@@ -37,7 +38,6 @@
 "'"												return QUOTE;
 "\""											return DQUOTE;
 [a-zA-Z]+										return IDENT;
-[ \t\r\n]										;
 .												return ERROR;
 
 %%
