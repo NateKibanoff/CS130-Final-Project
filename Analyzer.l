@@ -6,7 +6,7 @@
 
 %%
 "<!--".*"-->"									;
-"<!--".*										return LCOMMENT;
+"<!--"											return LCOMMENT;
 .*"-->"											return RCOMMENT;
 "+"												return PLUS;
 "-"												return MINUS;
@@ -31,7 +31,8 @@
 "\""											return DQUOTE;
 [0-9]+("."[0-9]+)?([eE][-]?[0-9]+)?				return NUMBER;
 [a-zA-Z]+										return IDENT;
-.												;
+[ \t\r\n]										;
+.												return ERROR;
 
 %%
 

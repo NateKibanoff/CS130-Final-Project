@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "Analyzer.h"
 
 extern int yylex();
@@ -23,7 +24,14 @@ int main(){
 			comment--;
 		}
 		else if(comment == 0 && token){
-			printf("%s		%s\n",tokens[token],yytext);
+			if(token == ERROR){
+				printf("***lexical error: illegal character (%s)\n",yytext);
+			}
+			else{
+				printf(tokens[token]);
+				for(int i=11;i>strlen(tokens[token]);i--) printf(" ");
+				printf("%s\n",yytext);
+			}
 		}
 		token = yylex();
 	}

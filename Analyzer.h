@@ -23,3 +23,4 @@
 #define ENDTAGHEAD 23
 #define LCOMMENT 24
 #define RCOMMENT 25
+#define ERROR 26
