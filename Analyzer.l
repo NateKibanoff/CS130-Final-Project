@@ -1,9 +1,13 @@
 %{
-#include "myscanner.h"
+#include "Analyzer.h"
+//[-+]?[0-9]+[.]?[0-9]+([eE][-+]?[0-9]+)? 		return NUMBER;
 %}
 %option nounput yylineno
 
 %%
+"<!--".*"-->"									;
+"<!--".*										return LCOMMENT;
+.*"-->"											return RCOMMENT;
 "+"												return PLUS;
 "-"												return MINUS;
 "**"											return EXP;
@@ -25,9 +29,8 @@
 "."												return PERIOD;
 "'"												return QUOTE;
 "\""											return DQUOTE;
-[-+]?[0-9]+[.]?[0-9]+([eE][-+]?[0-9]+)? 		return NUMBER;
+[0-9]+("."[0-9]+)?([eE][-]?[0-9]+)?				return NUMBER;
 [a-zA-Z]+										return IDENT;
-"<!--".*"-->"									;
 .												;
 
 %%

@@ -21,3 +21,5 @@
 #define IDENT 21
 #define TAGIDENT 22
 #define ENDTAGHEAD 23
+#define LCOMMENT 24
+#define RCOMMENT 25
