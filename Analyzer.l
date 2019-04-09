@@ -9,11 +9,12 @@
 "<!--"											return LCOMMENT;
 .*"-->"											return RCOMMENT;
 [0-9]+("."[0-9]+)?([eE][-]?[0-9]+)?				return NUMBER;
-[0-9]+^"."										return ERROR;
-[0-9]+"."[^0-9]?								return ERROR;
-[0-9]+("."[0-9]+)?^([eE][-]?[0-9]+)?			return ERROR;
-[0-9]+("."[0-9]+)?([eE]^[-]?[0-9]+)?			return ERROR;
-[0-9]+("."[0-9]+)?([eE][-]?[^0-9]?)				return ERROR;
+[0-9]+[^"."]									return ERROR;
+[0-9]+("."[^0-9])								return ERROR;
+[0-9]+("."[0-9]+)?[^eE]							return ERROR;	
+[0-9]+("."[0-9]+)?[eE][^-]						return ERROR;
+[0-9]+("."[0-9]+)?[eE][-]?[^0-9]				return ERROR;
+[0-9]+("."[0-9]+)?[eE][-]?[0-9]+[^0-9]			return ERROR;
 "+"												return PLUS;
 "-"												return MINUS;
 "**"											return EXP;
