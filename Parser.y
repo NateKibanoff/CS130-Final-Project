@@ -1,6 +1,7 @@
 %{
 void yyerror (char *s);
 int yylex();
+char* yytext;
 #include <stdio.h>     /* C declarations used in actions */
 #include <stdlib.h>
 #include <ctype.h>
@@ -21,7 +22,7 @@ void updateSymbolVal(char symbol, int val);
 %token data_open
 %token data_close
 %token text
-%type <tkn> table table_rows contents
+%type <tkn> table table_rows contents data
 
 %%
 
@@ -34,38 +35,42 @@ table_rows	: row_open contents row_close				{printf("Got table row\n");}
 			| row_open contents row_close table_rows	{printf("Got table rows\n");}
 			;
 
-contents	: header_open text header_close				{printf("Got table header\n");}
-			| data_open text data_close					{printf("Got table data\n",text);}
-			| header_open text header_close contents	{printf("Got table headers\n");}
-			| data_open text data_close contents		{printf("Got more table data\n");}
+contents	: header_open data header_close				{printf("Got table header\n");}
+			| data_open data data_close					{printf("Got table data\n");}
+			| header_open data header_close contents	{printf("Got table headers\n");}
+			| data_open data data_close contents		{printf("Got more table data\n");}
+			;
+
+data		: text {printf("%s\n", yytext);}
 			;
 
 %%                     /* C code */
+ 
+// int computeSymbolIndex(char token)
+// {
+	// int idx = -1;
+	// if(islower(token)) {
+		// idx = token - 'a' + 26;
+	// } else if(isupper(token)) {
+		// idx = token - 'A';
+	// }
+	// return idx;
+// } 
 
-int computeSymbolIndex(char token)
-{
-	int idx = -1;
-	if(islower(token)) {
-		idx = token - 'a' + 26;
-	} else if(isupper(token)) {
-		idx = token - 'A';
-	}
-	return idx;
-} 
+// /* returns the value of a given symbol */
+// int symbolVal(char symbol)
+// {
+	// int bucket = computeSymbolIndex(symbol);
+	// return symbols[bucket];
+// }
 
-/* returns the value of a given symbol */
-int symbolVal(char symbol)
-{
-	int bucket = computeSymbolIndex(symbol);
-	return symbols[bucket];
-}
+// /* updates the value of a given symbol */
+// void updateSymbolVal(char symbol, int val)
+// {
+	// int bucket = computeSymbolIndex(symbol);
+	// symbols[bucket] = val;
+// } 
 
-/* updates the value of a given symbol */
-void updateSymbolVal(char symbol, int val)
-{
-	int bucket = computeSymbolIndex(symbol);
-	symbols[bucket] = val;
-}
 
 int main (void) {
 	/* init symbol table */
@@ -73,8 +78,7 @@ int main (void) {
 	for(i=0; i<52; i++) {
 		symbols[i] = 0;
 	}
-
-	return yyparse ( );
+	return yyparse();
 }
 
 void yyerror (char *s) {fprintf (stderr, "%s\n", s);} 
