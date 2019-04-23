@@ -45,7 +45,7 @@ contents	: header_open data header_close				{printf("Got table header\n");}
 			;
 
 data		: exp			                  			{printf("expression found\n");}
-			| text 										{printf("%s\n", yytext);}
+			| text 										{printf("%s,", yytext);}
 			;
 			
 exp    		: term                  					{$$ = $1;}
