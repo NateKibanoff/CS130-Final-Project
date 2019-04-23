@@ -5,7 +5,6 @@
 //[0-9]+[^"."\t\r\n]								return NUMERROR;
 %}
 %option nounput yylineno
-
 %%
 [ \t\r\n]										;
 "<!--".*"-->"									;
@@ -40,8 +39,9 @@
 "'"												return QUOTE;
 "\""											return DQUOTE;
 [a-zA-Z]+										return IDENT;
-<<EOF>>     									return EOF;
 .												return ERROR;
+<<EOF>>     									{yyterminate();return EOF;}
+
 
 %%
 

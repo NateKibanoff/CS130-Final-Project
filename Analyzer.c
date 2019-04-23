@@ -11,7 +11,7 @@ char* tokens[] = {NULL, "PLUS", "MINUS", "MULT", "DIVIDE",
 	"RBRACKET", "EQUALS", "LTHAN", "GTHAN", "COLON",
 	"COMMA", "SCOLON", "PERIOD", "QUOTE", "DQUOTE",
 	"NUMBER", "IDENT", "TAGIDENT", "ENDTAGHEAD", "LCOMMENT",
-	"RCOMMENT"};
+	"RCOMMENT", "EOF"};
 
 int main(){
 	int token = yylex();
@@ -57,9 +57,11 @@ int main(){
 				printf("%s\n",yytext);
 			}
 		}
-		else if(token == EOF && comment > 0){
-			printf("***lexical error: un-expected end of file\n");
-			break;
+		else if(token == EOF){
+			if (comment > 0){
+				printf("***lexical error: un-expected end of file\n");
+				break;
+			}
 		}
 		token = yylex();
 	}
