@@ -11,6 +11,7 @@ int symbolVal(char symbol);
 int first;
 void updateSymbolVal(char symbol, int val);
 double evaluate(char* expression);
+double multiply(char* factor);
 char* brackets(char* txt);
 %}
 
@@ -48,7 +49,7 @@ contents	: header_open data header_close				{;}
 			;
 
 data		: exp			                  			{;}
-			| equation									{if(first++) printf(","); printf("%.2f", evaluate(yytext));}
+			| equation									{if(first++) printf(","); printf("%f", evaluate(yytext));}
 			| text 										{if(first++) printf(","); printf("%s", brackets(yytext));}
 			| data text									{printf(" %s", brackets(yytext));}
 			;
@@ -84,14 +85,52 @@ term   		: number                					{if(first++) printf(","); printf("%s", yyt
 // {
 	// int bucket = computeSymbolIndex(symbol);
 	// symbols[bucket] = val;
-// } 
+// }
+
+double multiply(char* factor){
+	double result;
+	char* temp = strtok(factor,"*");
+	result = atof(temp);
+	temp = strtok(NULL,"*");
+	while(temp){
+		result *= atof(temp);
+		temp = strtok(NULL,"*");
+	}
+	return result;
+}
 
 double evaluate(char* expression){
-	double a,b;
+
+	//old code
+	/*double a,b;
 	char* temp = strtok(expression,"=+");
 	a = atof(temp);
 	b = atof(strtok(NULL,"+"));
-	return a+b;
+	return a+b;*/
+	
+	//new code
+	//printf("expression %s\n",expression);
+	char* temp = malloc(strlen(expression));
+	strcpy(temp, expression);
+	temp[strlen(expression)]='\0';
+	char* addsub = strtok(temp,"*=0123456789./");
+	//printf("addsub %s\n",addsub);
+	char* factor = strtok(expression,"=+-");
+	int started=0,idx=0;
+	double result;
+	while(factor){
+		//printf("factor %s\n",factor);
+		if(strchr(factor,'*')){
+			if(started++==0) result = multiply(factor);
+			else if(addsub[idx++]=='+') result += multiply(factor);
+			else result -= multiply(factor);
+		}
+		else if(started++==0) result = atof(factor);
+		else if(addsub[idx++]=='+') result += atof(factor);
+		else result -= atof(factor);
+		factor = strtok(NULL,"+-");
+	}
+	return result;
 }
 
 char* brackets(char* txt){

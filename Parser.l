@@ -13,7 +13,7 @@ int yylex();
 "<td>"					{return data_open;}
 "</td>"					{return data_close;}
 [-+]?[0-9]+("."[0-9]+)? {yylval.num = atof(yytext); return number;}
-"="[0-9]+("."[0-9]+)?"+"[0-9]+("."[0-9]+)?		{return equation;}
+"="[0-9]+("."[0-9]+)?(["+""*""/""-"][0-9]+("."[0-9]+)?)+		{return equation;}
 "[".*"]"				{return text;}
 [a-zA-Z0-9:;,]+			{return text;}
 [+-=\*\.\[\]]+			{return text;}
