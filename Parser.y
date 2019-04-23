@@ -9,6 +9,7 @@ char* yytext;
 int symbols[52];
 int symbolVal(char symbol);
 void updateSymbolVal(char symbol, int val);
+double evaluate(char* expression);
 %}
 
 %union {char* tkn; float num;}	/* Yacc definitions */
@@ -23,38 +24,38 @@ void updateSymbolVal(char symbol, int val);
 %token data_close
 %token text
 %token number
+%token <tkn> equation
 %type <tkn> table table_rows contents data
 %type <num> exp term
-
 
 %%
 
 /* descriptions of expected inputs     corresponding actions (in C) */
 		
-table		: table_open table_rows table_close			{printf("Got table\n");}
+table		: table_open table_rows table_close			{;}
 			;
 
-table_rows	: row_open contents row_close				{printf("Got table row\n");}
-			| row_open contents row_close table_rows	{printf("Got table rows\n");}
+table_rows	: row_open contents row_close				{;}
+			| row_open contents row_close table_rows	{;}
 			;
 
-contents	: header_open data header_close				{printf("Got table header\n");}
-			| data_open data data_close					{printf("Got table data\n");}
-			| header_open data header_close contents	{printf("Got table headers\n");}
-			| data_open data data_close contents		{printf("Got more table data\n");}
+contents	: header_open data header_close				{;}
+			| data_open data data_close					{;}
+			| header_open data header_close contents	{printf("\n");}
+			| data_open data data_close contents		{printf("\n");}
 			;
 
-data		: exp			                  			{printf("expression found\n");}
+data		: exp			                  			{;}
+			| equation									{printf("%f", evaluate(yytext));}
 			| text 										{printf("%s,", yytext);}
 			;
 			
 exp    		: term                  					{$$ = $1;}
-			| exp '+' term          					{$$ = $1 + $3;}
 			;
 			
-term   		: number                					{printf("%s\n", yytext);}
+term   		: number                					{printf("%s", yytext);}
 			;
-	
+
 %%                     /* C code */
  
 // int computeSymbolIndex(char token)
@@ -82,6 +83,13 @@ term   		: number                					{printf("%s\n", yytext);}
 	// symbols[bucket] = val;
 // } 
 
+double evaluate(char* expression){
+	double a,b;
+	char* temp = strtok(expression,"=+");
+	a = atof(temp);
+	b = atof(strtok(NULL,"+"));
+	return a+b;
+}
 
 int main (void) {
 	/* init symbol table */

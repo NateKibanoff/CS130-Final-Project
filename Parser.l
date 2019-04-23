@@ -12,11 +12,11 @@ int yylex();
 "</th>"					{return header_close;}
 "<td>"					{return data_open;}
 "</td>"					{return data_close;}
-[-+]?[0-9]+("."[0-9]+)? {yylval.num = atoi(yytext); return number;}
+[-+]?[0-9]+("."[0-9]+)? {yylval.num = atof(yytext); return number;}
+"="[0-9]+("."[0-9]+)?"+"[0-9]+("."[0-9]+)?		{return equation;}
 [a-zA-Z0-9]+			{return text;}
 [+-=\*\.\[\]]+			{return text;}
 [ \t\r\n]				;
 .						{ECHO; yyerror("unexpected character");}
 %%
 int yywrap (void) {return 1;}
-
