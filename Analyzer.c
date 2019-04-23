@@ -41,7 +41,7 @@ int main(){
 		}
 		else if(comment < 0 && token){
 			comment ++;
-			printf("MINUS     -\nMINUS     -\nGTHAN     >\n");
+			printf("MINUS      -\nMINUS      -\nGTHAN      >\n");
 			if(token == ERROR){
 				printf("***lexical error: illegal character (%s)\n",yytext);
 			}
