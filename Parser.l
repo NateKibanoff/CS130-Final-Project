@@ -12,8 +12,9 @@ int yylex();
 "</th>"					{return header_close;}
 "<td>"					{return data_open;}
 "</td>"					{return data_close;}
-[a-zA-Z0-9]+			{return text;}
-[+-=\*\.]+				{return text;}
+"["."]"					{return text;}
+[a-zA-Z0-9:;,]+			{return text;}
+[+-=*\.]+				{return text;}
 [ \t\r\n]				;
 .						{ECHO; yyerror("unexpected character");}
 %%

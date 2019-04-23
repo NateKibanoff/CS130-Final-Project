@@ -28,20 +28,20 @@ void updateSymbolVal(char symbol, int val);
 
 /* descriptions of expected inputs     corresponding actions (in C) */
 		
-table		: table_open table_rows table_close			{printf("Got table\n");}
+table		: table_open table_rows table_close			{;}
 			;
 
-table_rows	: row_open contents row_close				{printf("Got table row\n");}
-			| row_open contents row_close table_rows	{printf("Got table rows\n");}
+table_rows	: row_open contents row_close				{;}
+			| row_open contents row_close table_rows	{;}
 			;
 
-contents	: header_open data header_close				{printf("Got table header\n");}
-			| data_open data data_close					{printf("Got table data\n");}
-			| header_open data header_close contents	{printf("Got table headers\n");}
-			| data_open data data_close contents		{printf("Got more table data\n");}
+contents	: header_open data header_close				{;}
+			| data_open data data_close					{;}
+			| header_open data header_close contents	{printf("\n");}
+			| data_open data data_close contents		{printf("\n");}
 			;
 
-data		: text {printf("%s\n", yytext);}
+data		: text	{printf("%s,", yytext);}
 			;
 
 %%                     /* C code */
