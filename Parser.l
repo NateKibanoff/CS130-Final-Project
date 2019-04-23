@@ -12,9 +12,9 @@ int yylex();
 "</th>"					{return header_close;}
 "<td>"					{return data_open;}
 "</td>"					{return data_close;}
-"["."]"					{return text;}
-[a-zA-Z0-9:;,]+			{return text;}
-[+-=*\.]+				{return text;}
+[-+]?[0-9]+("."[0-9]+)? {yylval.num = atoi(yytext); return number;}
+[a-zA-Z0-9]+			{return text;}
+[+-=\*\.\[\]]+			{return text;}
 [ \t\r\n]				;
 .						{ECHO; yyerror("unexpected character");}
 %%
