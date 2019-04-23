@@ -57,12 +57,7 @@ int main(){
 				printf("%s\n",yytext);
 			}
 		}
-		else if(token == EOF){
-			if (comment > 0){
-				printf("***lexical error: un-expected end of file\n");
-				break;
-			}
-		}
 		token = yylex();
 	}
+	if(comment > 0) printf("***lexical error: un-expected end of file\n");
 }

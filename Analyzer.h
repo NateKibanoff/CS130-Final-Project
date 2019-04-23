@@ -25,3 +25,4 @@
 #define RCOMMENT 25
 #define ERROR 26
 #define NUMERROR 27
+#define END 28
