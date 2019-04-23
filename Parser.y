@@ -1,6 +1,6 @@
 %{
 void yyerror (char *s);
-int yylex();
+extern int yylex();
 char* yytext;
 #include <stdio.h>     /* C declarations used in actions */
 #include <stdlib.h>
@@ -11,7 +11,7 @@ int symbolVal(char symbol);
 void updateSymbolVal(char symbol, int val);
 %}
 
-%union {char* tkn;}	/* Yacc definitions */
+%union {char* tkn; float num;}	/* Yacc definitions */
 %start table
 %token table_open
 %token table_close
@@ -22,28 +22,39 @@ void updateSymbolVal(char symbol, int val);
 %token data_open
 %token data_close
 %token text
+%token number
 %type <tkn> table table_rows contents data
+%type <num> exp term
+
 
 %%
 
 /* descriptions of expected inputs     corresponding actions (in C) */
 		
-table		: table_open table_rows table_close			{;}
+table		: table_open table_rows table_close			{printf("Got table\n");}
 			;
 
-table_rows	: row_open contents row_close				{;}
-			| row_open contents row_close table_rows	{;}
+table_rows	: row_open contents row_close				{printf("Got table row\n");}
+			| row_open contents row_close table_rows	{printf("Got table rows\n");}
 			;
 
-contents	: header_open data header_close				{;}
-			| data_open data data_close					{;}
-			| header_open data header_close contents	{printf("\n");}
-			| data_open data data_close contents		{printf("\n");}
+contents	: header_open data header_close				{printf("Got table header\n");}
+			| data_open data data_close					{printf("Got table data\n");}
+			| header_open data header_close contents	{printf("Got table headers\n");}
+			| data_open data data_close contents		{printf("Got more table data\n");}
 			;
 
-data		: text	{printf("%s,", yytext);}
+data		: exp			                  			{printf("expression found\n");}
+			| text 										{printf("%s\n", yytext);}
 			;
-
+			
+exp    		: term                  					{$$ = $1;}
+			| exp '+' term          					{$$ = $1 + $3;}
+			;
+			
+term   		: number                					{printf("%s\n", yytext);}
+			;
+	
 %%                     /* C code */
  
 // int computeSymbolIndex(char token)
