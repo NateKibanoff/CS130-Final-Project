@@ -40,6 +40,7 @@
 "'"												return QUOTE;
 "\""											return DQUOTE;
 [a-zA-Z]+										return IDENT;
+<<EOF>>     									return EOF;
 .												return ERROR;
 
 %%
