@@ -8,8 +8,10 @@ char* yytext;
 #include <string.h>
 int symbols[52];
 int symbolVal(char symbol);
+int first;
 void updateSymbolVal(char symbol, int val);
 double evaluate(char* expression);
+char* brackets(char* txt);
 %}
 
 %union {char* tkn; float num;}	/* Yacc definitions */
@@ -41,19 +43,20 @@ table_rows	: row_open contents row_close				{;}
 
 contents	: header_open data header_close				{;}
 			| data_open data data_close					{;}
-			| header_open data header_close contents	{printf("\n");}
-			| data_open data data_close contents		{printf("\n");}
+			| header_open data header_close contents	{printf("\n"); first = 0;}
+			| data_open data data_close contents		{printf("\n"); first = 0;}
 			;
 
 data		: exp			                  			{;}
-			| equation									{printf("%f", evaluate(yytext));}
-			| text 										{printf("%s,", yytext);}
+			| equation									{if(first++) printf(","); printf("%.2f", evaluate(yytext));}
+			| text 										{if(first++) printf(","); printf("%s", brackets(yytext));}
+			| data text									{printf(" %s", brackets(yytext));}
 			;
 			
 exp    		: term                  					{$$ = $1;}
 			;
 			
-term   		: number                					{printf("%s", yytext);}
+term   		: number                					{if(first++) printf(","); printf("%s", yytext);}
 			;
 
 %%                     /* C code */
@@ -91,8 +94,19 @@ double evaluate(char* expression){
 	return a+b;
 }
 
+char* brackets(char* txt){
+	if(txt[0] == '[' && txt[strlen(txt) - 1] == ']'){
+		char* result = malloc(strlen(txt) - 2);
+		strncpy(result, txt + 1, strlen(txt) - 2);
+		result[strlen(txt)-2]='\0';
+		return result;
+	}
+	return txt;
+}
+
 int main (void) {
 	/* init symbol table */
+	first = 0;
 	int i;
 	for(i=0; i<52; i++) {
 		symbols[i] = 0;

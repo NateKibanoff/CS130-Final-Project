@@ -14,7 +14,7 @@ Submitted by [Nathan John Kibanoff](http://github.com/NateKibanoff) and [Don Ric
 
 ## Special cases handled (to be added)
 
-## How to recompile and run programs from source codes (to be updated)
+## How to recompile and run programs from source codes
 *Lexical analyzer program*
 1. Run the command ```flex Analyzer.l``` to produce a C program named ```lex.yy.c``` using the command prompt
 2. Compile the final Analyzer program by running the command ```gcc Analyzer.c lex.yy.c -o Analyzer```. This should produce an executable named ```Analyzer.exe```
