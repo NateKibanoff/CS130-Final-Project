@@ -1,6 +1,6 @@
 %{
 void yyerror (char *s);
-extern int yylex();
+int yylex();
 char* yytext;
 #include <stdio.h>     /* C declarations used in actions */
 #include <stdlib.h>
