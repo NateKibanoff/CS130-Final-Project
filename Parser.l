@@ -17,6 +17,7 @@ int yylex();
 [a-zA-Z0-9]+			{return text;}
 [+-=\*\.\[\]]+			{return text;}
 [ \t\r\n]				;
+"<!--".*"-->"			;
 .						{ECHO; yyerror("unexpected character");}
 %%
 int yywrap (void) {return 1;}
