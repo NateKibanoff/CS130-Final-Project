@@ -1,6 +1,8 @@
 %{
 #include "Analyzer.h"
 //[-+]?[0-9]+[.]?[0-9]+([eE][-+]?[0-9]+)? 		return NUMBER;
+//[0-9]+("."[0-9]+)?[^eE\t\r\n]					return NUMERROR;
+//[0-9]+[^"."\t\r\n]								return NUMERROR;
 %}
 %option nounput yylineno
 
@@ -10,9 +12,9 @@
 "<!--"											return LCOMMENT;
 .*"-->"											return RCOMMENT;
 [-+]?[0-9]+("."[0-9]+)?([eE][-+]?[0-9]+)?[" "]? return NUMBER;
-[0-9]+[^"."\t\r\n]								return NUMERROR;
+
 [0-9]+("."[^0-9\t\r\n])							return NUMERROR;
-[0-9]+("."[0-9]+)?[^eE\t\r\n]					return NUMERROR;	
+	
 [0-9]+("."[0-9]+)?[eE][^-0-9]					return NUMERROR;
 [0-9]+("."[0-9]+)?[eE][-]?[^0-9\t\r\n]			return NUMERROR;
 [0-9]+("."[0-9]+)?[eE][-]?[0-9]+[^0-9\t\r\n]	return NUMERROR;
