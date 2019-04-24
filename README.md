@@ -26,4 +26,5 @@ Submitted by [Nathan John Kibanoff](http://github.com/NateKibanoff) and [Don Ric
 3. Compile the final Parser program by running the command ```gcc lex.yy.c Parser.tab.c -o Parser```. This should produce an executable named ```Parser.exe```
 4. To run the program, input the command ```Parser < input.html > output.csv```
 
-## How to test the programs using the testing libraries used (to be added)
+## How to test the programs using the testing libraries used
+After producing the output files, type the command ```FC [program_output] [expected_output]``` where ```[program_output]``` is the filename for the output file produced by the Analyzer or Parser, and ```[expected_output]``` is the filename for the correct output given input. After running this command, the console will display the lines where the two files differed. Otherwise, it will specify that no differences have been encountered.
