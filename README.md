@@ -17,6 +17,13 @@ Submitted by [Nathan John Kibanoff](http://github.com/NateKibanoff) and [Don Ric
 3. Core i3
 4. If all else fails, use the latest device
 
+## Special cases handled
+- Numbers that start with a positive or negative sign may be accepted; this was defined in the lex files
+- A number may also end with a single whitespace character, and parsed properly in the output file
+- For the Parser program, any expression that needs to be evaluated is automatically rounded to two digits after the decimal place
+- In addition, cases where there are bracketed comments within bracketed comments are also handled. The Parser program only considers the outmost pair of brackets when formatting the output
+- Comments within comments are handled; a counter for how many comment tags have been opened is placed in the C code
+
 ## How to recompile and run programs from source codes
 *Lexical analyzer program*
 1. Run the command ```flex Analyzer.l``` to produce a C program named ```lex.yy.c``` using the command prompt
