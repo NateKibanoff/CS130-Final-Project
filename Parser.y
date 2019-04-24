@@ -49,7 +49,7 @@ contents	: header_open data header_close				{;}
 			;
 
 data		: exp			                  			{;}
-			| equation									{if(first++) printf(","); printf("%f", evaluate(yytext));}
+			| equation									{if(first++) printf(","); printf("%.2f", evaluate(yytext));}
 			| text 										{if(first++) printf(","); printf("%s", brackets(yytext));}
 			| data text									{printf(" %s", brackets(yytext));}
 			;
@@ -61,31 +61,6 @@ term   		: number                					{if(first++) printf(","); printf("%s", yyt
 			;
 
 %%                     /* C code */
- 
-// int computeSymbolIndex(char token)
-// {
-	// int idx = -1;
-	// if(islower(token)) {
-		// idx = token - 'a' + 26;
-	// } else if(isupper(token)) {
-		// idx = token - 'A';
-	// }
-	// return idx;
-// } 
-
-// /* returns the value of a given symbol */
-// int symbolVal(char symbol)
-// {
-	// int bucket = computeSymbolIndex(symbol);
-	// return symbols[bucket];
-// }
-
-// /* updates the value of a given symbol */
-// void updateSymbolVal(char symbol, int val)
-// {
-	// int bucket = computeSymbolIndex(symbol);
-	// symbols[bucket] = val;
-// }
 
 double multiply(char* factor){
 	double result;
@@ -100,35 +75,20 @@ double multiply(char* factor){
 }
 
 double evaluate(char* expression){
-
-	//old code
-	/*double a,b;
-	char* temp = strtok(expression,"=+");
-	a = atof(temp);
-	b = atof(strtok(NULL,"+"));
-	return a+b;*/
-	
-	//new code
-	//printf("expression %s\n",expression);
-	char* temp = malloc(strlen(expression));
-	strcpy(temp, expression);
-	temp[strlen(expression)]='\0';
-	char* addsub = strtok(temp,"*=0123456789./");
-	//printf("addsub %s\n",addsub);
+	char* ops = strchr(expression, '+');
 	char* factor = strtok(expression,"=+-");
-	int started=0,idx=0;
+	int started=0,idx = 0;
 	double result;
 	while(factor){
-		//printf("factor %s\n",factor);
 		if(strchr(factor,'*')){
-			if(started++==0) result = multiply(factor);
-			else if(addsub[idx++]=='+') result += multiply(factor);
-			else result -= multiply(factor);
+			char* temp = malloc(strlen(expression));
+			strcpy(temp, factor);
+			if(started++==0) result = multiply(temp);
+			else result += multiply(temp);
 		}
 		else if(started++==0) result = atof(factor);
-		else if(addsub[idx++]=='+') result += atof(factor);
-		else result -= atof(factor);
-		factor = strtok(NULL,"+-");
+		else result += atof(factor);
+		factor = strtok(NULL,"+");
 	}
 	return result;
 }

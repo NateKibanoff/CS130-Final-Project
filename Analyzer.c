@@ -31,12 +31,20 @@ int main(){
 				printf("***lexical error: badly formed number\n");
 				printf("NUMBER");
 				for(int i=5;i>0;i--) printf(" ");
-				printf("%s\n",yytext);
+				for(int i=0;i<strlen(yytext);i++) {
+					//printf("%s\n",yytext);
+					if(i < strlen(yytext) - 1 || yytext[i] != ' ') printf("%c",yytext[i]);
+				}
+				printf("\n");
 			}
 			else{
 				printf(tokens[token]);
 				for(int i=11;i>strlen(tokens[token]);i--) printf(" ");
-				printf("%s\n",yytext);
+				for(int i=0;i<strlen(yytext);i++) {
+					//printf("%s\n",yytext);
+					if(i < strlen(yytext) - 1 || yytext[i] != ' ') printf("%c",yytext[i]);
+				}
+				printf("\n");
 			}
 		}
 		else if(comment < 0 && token){
@@ -49,12 +57,20 @@ int main(){
 				printf("***lexical error: badly formed number\n");
 				printf("NUMBER");
 				for(int i=5;i>0;i--) printf(" ");
-				printf("%s\n",yytext);
+				for(int i=0;i<strlen(yytext);i++) {
+					//printf("%s\n",yytext);
+					if(i < strlen(yytext) - 1 || yytext[i] != ' ') printf("%c",yytext[i]);
+				}
+				printf("\n");
 			}
 			else{
 				printf(tokens[token]);
 				for(int i=11;i>strlen(tokens[token]);i--) printf(" ");
-				printf("%s\n",yytext);
+				for(int i=0;i<strlen(yytext);i++) {
+					//printf("%s\n",yytext);
+					if(i < strlen(yytext) - 1 || yytext[i] != ' ') printf("%c",yytext[i]);
+				}
+				printf("\n");
 			}
 		}
 		token = yylex();
