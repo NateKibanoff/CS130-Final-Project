@@ -1,7 +1,7 @@
 # CS130 Final Project
 Submitted by [Nathan John Kibanoff](http://github.com/NateKibanoff) and [Don Richson Que](http://github.com/Draqe)
 
-## Files included in the submission (to be updated)
+## Files included in the submission 
 - README.md
 - .gitignore
 - Analyzer.l
@@ -10,9 +10,10 @@ Submitted by [Nathan John Kibanoff](http://github.com/NateKibanoff) and [Don Ric
 - Parser.y
 - Parser.l
 
-## Minimum required machine specifications (to be added)
+## Minimum required machine specifications 
 
-## Special cases handled (to be added)
+1. Windows 10
+2. Has flex and bison installed
 
 ## How to recompile and run programs from source codes
 *Lexical analyzer program*
