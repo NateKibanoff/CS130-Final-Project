@@ -14,6 +14,8 @@ Submitted by [Nathan John Kibanoff](http://github.com/NateKibanoff) and [Don Ric
 
 1. Windows 10
 2. Has flex and bison installed
+3. Core i3
+4. If all else fails, use the latest device
 
 ## How to recompile and run programs from source codes
 *Lexical analyzer program*
